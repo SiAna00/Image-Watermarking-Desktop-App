@@ -3,6 +3,7 @@ from PIL import ImageTk, Image, ImageDraw, ImageFont
 from tkinter import filedialog
 from config import initial_dir, font_path
 
+
 def select_image():
 
     global uploaded_image
@@ -21,7 +22,8 @@ def select_image():
     uploaded_img_label.pack(pady=20)
 
 
-def add_watermark(image):
+def add_watermark(image, wm_text):
+
     global wm_image
 
     # Create an image object
@@ -41,11 +43,10 @@ def add_watermark(image):
     font = ImageFont.truetype(font_path, font_size)
 
     # Choose coordinates for watermark
-    x, y = int(image_width / 2), int(image_height / 2)
+    x, y = int(image_width / 2), int(image_height / 1.2)
 
     # Add watermark
-    wm_text = "AnaSi Was Here"
-    draw.text((x, y), wm_text, font=font, fill="#FFF", anchor="ms")
+    draw.text((x, y), wm_text, font=font, fill="linen", anchor="ms")
 
     # Display image
     wm_image = ImageTk.PhotoImage(new_image)
@@ -67,13 +68,17 @@ window.maxsize(width=1440, height=800)
 window.config(padx=20, pady=20)
 
 # Create select button
-select_button = Button(text="Select an Image", command=select_image)
-select_button.config(padx=5, pady=5)
+select_button = Button(text="Select an Image", command=select_image, bg="linen")
+select_button.config(padx=36, pady=5)
 select_button.pack(pady=5)
 
+# Create watermark text input
+wm_text = Entry(width=20)
+wm_text.pack(ipady=5)
+
 # Create add watermark button
-add_wm_button = Button(text="Add Watermark", command=lambda: add_watermark(filename))
-add_wm_button.config(padx=5, pady=5)
+add_wm_button = Button(text="Add Watermark", command=lambda: add_watermark(filename, wm_text.get()), bg="linen")
+add_wm_button.config(padx=36, pady=5)
 add_wm_button.pack(pady=5)
 
 window.mainloop()
