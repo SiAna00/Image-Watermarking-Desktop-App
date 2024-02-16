@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image, ImageDraw, ImageFont
 from tkinter import filedialog
+from config import initial_dir, font_path
 
 def select_image():
 
@@ -8,7 +9,7 @@ def select_image():
     global filename
 
     # Select an image
-    filename = filedialog.askopenfilename(initialdir="/mnt/c/Users/asimi/Pictures/Saved Pictures/Andy Warhol_Wallpapers", title="Select an Image", filetypes=(("JPG files", "*.jpg"), ("JPEG files", "*.jpeg"), ("PNG files", "*.png"), ("All files", "*.*")))
+    filename = filedialog.askopenfilename(initialdir=initial_dir, title="Select an Image", filetypes=(("JPG files", "*.jpg"), ("JPEG files", "*.jpeg"), ("PNG files", "*.png"), ("All files", "*.*")))
     selected_image = Image.open(filename)
 
     # Resize image
@@ -37,7 +38,6 @@ def add_watermark(image):
     font_size = int(image_width / 12)
 
     # Choose font
-    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
     font = ImageFont.truetype(font_path, font_size)
 
     # Choose coordinates for watermark
@@ -53,7 +53,7 @@ def add_watermark(image):
     wm_img_label.pack(pady=20)
 
     # Save image with watermark
-    new_image.save("watermark_image.jpg")
+    new_image.save(f"{initial_dir}/watermark_image.jpg")
 
 
 # Create a window object
@@ -69,12 +69,12 @@ window.config(padx=20, pady=20)
 # Create select button
 select_button = Button(text="Select an Image", command=select_image)
 select_button.config(padx=5, pady=5)
-select_button.pack()
+select_button.pack(pady=5)
 
 # Create add watermark button
 add_wm_button = Button(text="Add Watermark", command=lambda: add_watermark(filename))
 add_wm_button.config(padx=5, pady=5)
-add_wm_button.pack()
+add_wm_button.pack(pady=5)
 
 window.mainloop()
 
